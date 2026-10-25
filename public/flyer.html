@@ -239,7 +239,7 @@
         <div class="qr-caption">
           Намоишҳои <span class="em">зиндаро</span><br>дар телефонатон бинед
         </div>
-        <div class="qr-wrap"><div class="qr-grid" id="qrA"></div></div>
+        <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to open" style="width:100%;height:100%;display:block;" /></div>
         <div class="qr-note">Скан кунед → kiraart.tj</div>
       </div>
       <div class="cta">
@@ -293,7 +293,7 @@
         <div class="qr-caption">
           <span class="em">Намоиши зинда</span><br>дар мобилаи шумо
         </div>
-        <div class="qr-wrap"><div class="qr-grid" id="qrB"></div></div>
+        <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to open" style="width:100%;height:100%;display:block;" /></div>
         <div class="qr-note">Скан кунед → kiraart.tj</div>
       </div>
       <div class="cta">
@@ -306,34 +306,5 @@
 
 </div>
 
-<script>
-  // Simple deterministic QR-looking pattern so the flyer is "visually" complete.
-  // IMPORTANT: before printing for real, replace with a real QR code from qr.io
-  // encoding your live URL (e.g. https://kiraart.tj  or your GitHub Pages URL).
-  function paintQR(id, seed) {
-    const grid = document.getElementById(id);
-    const n = 21;
-    let s = seed;
-    const rand = () => (s = (s * 9301 + 49297) % 233280) / 233280;
-    for (let r = 0; r < n; r++) {
-      for (let c = 0; c < n; c++) {
-        const inFinder =
-          (r < 7 && c < 7) || (r < 7 && c > n - 8) || (r > n - 8 && c < 7);
-        const finderOn =
-          inFinder &&
-          (r === 0 || r === 6 || c === 0 || c === 6 || r === n - 1 || r === n - 7 ||
-           (r >= 2 && r <= 4 && c >= 2 && c <= 4) ||
-           (r >= 2 && r <= 4 && c >= n - 5 && c <= n - 3) ||
-           (r >= n - 5 && r <= n - 3 && c >= 2 && c <= 4));
-        const on = inFinder ? finderOn : rand() < 0.46;
-        const cell = document.createElement('span');
-        cell.style.background = on ? '#0A0D14' : 'transparent';
-        grid.appendChild(cell);
-      }
-    }
-  }
-  paintQR('qrA', 1337);
-  paintQR('qrB', 4242);
-</script>
 </body>
 </html>

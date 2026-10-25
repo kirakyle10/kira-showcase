@@ -210,40 +210,21 @@ export default function Home() {
           </div>
 
           <div className="mx-auto mt-10 flex flex-col items-center">
-            <QrPlaceholder />
+            <div className="rounded-xl bg-white p-3 shadow-xl">
+              <img
+                src={`${import.meta.env.BASE_URL}qr.png`}
+                alt="Scan to open Kira Art Design"
+                width={160}
+                height={160}
+                className="h-40 w-40"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             <div className="mt-3 text-sm text-kira-muted">{t('cta.qr_caption')}</div>
           </div>
         </div>
       </section>
     </main>
-  );
-}
-
-function QrPlaceholder() {
-  const cells = 11;
-  const arr = Array.from({ length: cells * cells }, (_, i) => {
-    const row = Math.floor(i / cells);
-    const col = i % cells;
-    const isFinder =
-      (row < 3 && col < 3) ||
-      (row < 3 && col > cells - 4) ||
-      (row > cells - 4 && col < 3);
-    const seed = (row * 31 + col * 17) % 7;
-    return isFinder || seed === 0 || seed === 2;
-  });
-  return (
-    <div
-      className="grid gap-[2px] rounded-lg bg-white p-3"
-      style={{ gridTemplateColumns: `repeat(${cells}, 10px)` }}
-      aria-hidden="true"
-    >
-      {arr.map((on, i) => (
-        <span
-          key={i}
-          className="h-[10px] w-[10px] rounded-[1px]"
-          style={{ background: on ? '#0A0D14' : 'transparent' }}
-        />
-      ))}
-    </div>
   );
 }

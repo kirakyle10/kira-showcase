@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kirakyle10.github.io/kira-showcase/sitemap.xml

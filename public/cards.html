@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Kira Art Design — Business Cards (print)</title>
+  <meta name="robots" content="noindex" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #0A0D14;
+      --ink: #F7F8FA;
+      --muted: #9AA3B2;
+      --accent: #6C63FF;
+      --accent-2: #B388FF;
+      --gold: #D4AF7A;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #E6E7EA; color: #0A0D14; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 12px 20px;
+      background: #0A0D14;
+      color: #F7F8FA;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+    .toolbar b { color: #B388FF; }
+    .toolbar button {
+      background: #6C63FF;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .toolbar button:hover { background: #5a52e0; }
+    .hint { color: #9AA3B2; max-width: 60ch; }
+
+    /* A4 page */
+    .sheet {
+      width: 210mm;
+      height: 297mm;
+      padding: 11mm 10mm;
+      margin: 16px auto;
+      background: white;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      display: grid;
+      grid-template-columns: repeat(2, 85mm);
+      grid-template-rows: repeat(5, 55mm);
+      gap: 0;
+      justify-content: center;
+      align-content: center;
+      position: relative;
+    }
+    .sheet-label {
+      position: absolute;
+      top: 4mm;
+      left: 10mm;
+      font-size: 9pt;
+      color: #9AA3B2;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* One card */
+    .card {
+      width: 85mm;
+      height: 55mm;
+      position: relative;
+      overflow: hidden;
+      border: 0.1mm dashed #c7c9ce;
+    }
+
+    /* ---- FRONT ---- */
+    .front {
+      background:
+        radial-gradient(90% 120% at 100% 0%, rgba(108,99,255,0.35), transparent 55%),
+        radial-gradient(80% 100% at 0% 100%, rgba(179,136,255,0.25), transparent 55%),
+        linear-gradient(135deg, #0A0D14 0%, #141827 60%, #1a1f33 100%);
+      color: #F7F8FA;
+      padding: 7mm 8mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .front::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4), transparent 50%),
+        radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.3), transparent 50%),
+        radial-gradient(1px 1px at 50% 80%, rgba(255,255,255,0.25), transparent 50%),
+        radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.2), transparent 50%);
+      pointer-events: none;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      z-index: 1;
+    }
+    .logo-mark {
+      width: 8mm;
+      height: 8mm;
+      border-radius: 2mm;
+      background: linear-gradient(135deg, #6C63FF 0%, #B388FF 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11pt;
+      color: white;
+      letter-spacing: -0.02em;
+      box-shadow: 0 2px 8px rgba(108,99,255,0.4);
+    }
+    .brand {
+      font-size: 13pt;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+    .brand .sub {
+      display: block;
+      font-size: 7.5pt;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #B388FF;
+      margin-top: 1.5mm;
+    }
+
+    .tagline {
+      z-index: 1;
+      font-size: 10.5pt;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #F7F8FA;
+      max-width: 60mm;
+    }
+    .tagline em {
+      font-style: normal;
+      background: linear-gradient(135deg, #6C63FF 0%, #B388FF 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .meta {
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 7pt;
+      color: #9AA3B2;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .meta .right { color: #D4AF7A; }
+
+    /* ---- BACK ---- */
+    .back {
+      background: #F7F8FA;
+      color: #0A0D14;
+      padding: 5mm 6mm;
+      display: grid;
+      grid-template-columns: 32mm 1fr;
+      gap: 5mm;
+      align-items: center;
+    }
+    .back .qr-wrap {
+      width: 32mm;
+      height: 32mm;
+      background: white;
+      border-radius: 2mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0.3mm solid #e5e7eb;
+    }
+    .back .qr-wrap img {
+      width: 30mm;
+      height: 30mm;
+      display: block;
+    }
+    .back .info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2mm;
+      min-width: 0;
+    }
+    .back .name {
+      font-weight: 700;
+      font-size: 11pt;
+      line-height: 1.1;
+      color: #0A0D14;
+      letter-spacing: -0.01em;
+    }
+    .back .role {
+      font-size: 7.5pt;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6C63FF;
+      margin-bottom: 1.5mm;
+    }
+    .back .lines {
+      font-size: 8pt;
+      line-height: 1.4;
+      color: #141827;
+    }
+    .back .lines .lbl {
+      display: inline-block;
+      width: 11mm;
+      color: #9AA3B2;
+      font-weight: 500;
+    }
+    .back .url {
+      margin-top: 1mm;
+      font-size: 7.5pt;
+      font-weight: 600;
+      color: #6C63FF;
+      word-break: break-all;
+    }
+    .back .scan-hint {
+      position: absolute;
+      left: 6mm;
+      bottom: 2.5mm;
+      font-size: 6pt;
+      color: #9AA3B2;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media print {
+      @page { size: A4; margin: 0; }
+      html, body { background: white; }
+      .toolbar { display: none; }
+      .sheet {
+        box-shadow: none;
+        margin: 0 auto;
+        page-break-after: always;
+      }
+      .sheet:last-of-type { page-break-after: auto; }
+      .card { border: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div>
+      <b>Kira Art Design</b> — professional business cards (carte de visite). 10 cards per A4 sheet · 85×55 mm (standard).
+      <div class="hint">Print duplex (long edge). Page 1 = fronts. Page 2 = backs (column order is mirrored so each back aligns with its front). Cut on the dashed lines.</div>
+    </div>
+    <button onclick="window.print()">Print cards</button>
+  </div>
+
+  <!-- ================= FRONTS (page 1) ================= -->
+  <div class="sheet" aria-label="Fronts">
+    <div class="sheet-label">Page 1 · Fronts</div>
+    <!-- 10 identical fronts -->
+    <!-- row 1 -->
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+    <!-- row 2 -->
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+    <!-- row 3 -->
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+    <!-- row 4 -->
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+    <!-- row 5 -->
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+    <div class="card front">
+      <div class="logo-row">
+        <div class="logo-mark">K</div>
+        <div class="brand">Kira Art Design<span class="sub">Software Agency · Tajikistan</span></div>
+      </div>
+      <div class="tagline">We automate your <em>business</em>.</div>
+      <div class="meta"><span>Dushanbe · TJ</span><span class="right">Est. 2026</span></div>
+    </div>
+  </div>
+
+  <!-- ================= BACKS (page 2) ================= -->
+  <!-- IMPORTANT: for duplex printing on the long edge, the column order is
+       mirrored so each back lines up with its corresponding front after flipping. -->
+  <div class="sheet" aria-label="Backs">
+    <div class="sheet-label">Page 2 · Backs (mirrored for duplex)</div>
+    <!-- Row 1: right col then left col -->
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+    <!-- row 2 -->
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+    <!-- row 3 -->
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+    <!-- row 4 -->
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+    <!-- row 5 -->
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+    <div class="card back">
+      <div class="qr-wrap"><img src="/kira-showcase/qr.png" alt="Scan to visit Kira Art Design" /></div>
+      <div class="info">
+        <div class="name">Kira Art Design</div>
+        <div class="role">Custom software · Tajikistan</div>
+        <div class="lines">
+          <div><span class="lbl">WhatsApp</span>+992 17 259 47 74</div>
+          <div><span class="lbl">Telegram</span>@kiraartdesign</div>
+          <div><span class="lbl">Dushanbe</span>Tajikistan</div>
+        </div>
+        <div class="url">kirakyle10.github.io/kira-showcase</div>
+      </div>
+      <div class="scan-hint">Scan to see demos →</div>
+    </div>
+  </div>
+</body>
+</html>
