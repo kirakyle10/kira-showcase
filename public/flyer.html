@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="tg">
+<head>
+  <meta charset="utf-8" />
+  <title>Kira Art Design — Варақаи таблиғотӣ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    html, body { margin: 0; padding: 0; background: #e8eaf0; font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; color: #0A0D14; }
+
+    .sheet {
+      width: 210mm; height: 297mm;
+      display: grid; grid-template-rows: 1fr 1fr;
+      gap: 4mm; padding: 4mm;
+      background: #e8eaf0;
+    }
+
+    /* ── A5 FLYER CARD ─────────────────────────────── */
+    .flyer {
+      position: relative;
+      background: #ffffff;
+      border-radius: 6mm;
+      overflow: hidden;
+      box-shadow: 0 0 0 0.3mm #d8d9df;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      padding: 10mm;
+      gap: 8mm;
+    }
+
+    .flyer::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 100% 0%, rgba(108,99,255,0.14), transparent 42%),
+        radial-gradient(ellipse at 0% 100%, rgba(0,212,170,0.11), transparent 42%);
+      pointer-events: none;
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 2.5mm;
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+      font-weight: 700; font-size: 5mm;
+      letter-spacing: -0.2mm;
+    }
+    .brand .logo-dot {
+      width: 7mm; height: 7mm; border-radius: 2mm;
+      background: linear-gradient(135deg, #6C63FF, #00D4AA);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: white; font-weight: 800; font-size: 4mm;
+    }
+    .brand .k { background: linear-gradient(90deg, #6C63FF, #00D4AA); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    .tag {
+      margin-top: 2mm;
+      font-size: 2.8mm; letter-spacing: 0.6mm; text-transform: uppercase;
+      color: #6C63FF; font-weight: 600;
+    }
+
+    .headline {
+      margin-top: 4mm;
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+      font-weight: 700; font-size: 9.5mm; line-height: 1.05;
+      letter-spacing: -0.3mm;
+    }
+    .headline .accent { color: #6C63FF; }
+
+    .sub {
+      margin-top: 3mm;
+      font-size: 3.6mm; line-height: 1.35; color: #3b3f4a;
+      max-width: 95%;
+    }
+
+    .benefits {
+      list-style: none; margin: 4.5mm 0 0; padding: 0;
+      display: grid; gap: 2mm;
+      font-size: 3.4mm;
+    }
+    .benefits li {
+      display: grid; grid-template-columns: 5mm 1fr; align-items: start;
+      line-height: 1.3;
+    }
+    .benefits li .ic {
+      display: inline-flex; width: 4.6mm; height: 4.6mm; border-radius: 1.2mm;
+      background: rgba(108,99,255,0.1); color: #6C63FF;
+      font-size: 3.2mm; align-items: center; justify-content: center;
+      font-weight: 800;
+    }
+
+    .stats {
+      margin-top: 5mm;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm;
+    }
+    .stat {
+      border: 0.3mm solid #d8d9df; border-radius: 2mm; padding: 2.5mm 2mm;
+      text-align: center;
+    }
+    .stat .n {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 5.2mm; letter-spacing: -0.3mm;
+      background: linear-gradient(90deg, #6C63FF, #00D4AA);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      line-height: 1;
+    }
+    .stat .l { font-size: 2.4mm; color: #6B7280; margin-top: 1mm; }
+
+    /* ── Right column: QR + CTA ───────────────────── */
+    .right {
+      display: flex; flex-direction: column; justify-content: space-between;
+      align-items: stretch;
+    }
+    .qr-box {
+      background: #0A0D14; color: white;
+      border-radius: 4mm; padding: 5mm;
+      display: flex; flex-direction: column; align-items: center;
+      box-shadow: 0 2mm 6mm rgba(10,13,20,0.15);
+    }
+    .qr-caption {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.4mm; font-weight: 600; margin-bottom: 2.5mm;
+      text-align: center; line-height: 1.25;
+    }
+    .qr-caption .em {
+      background: linear-gradient(90deg, #6C63FF, #00D4AA);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .qr-wrap {
+      width: 42mm; height: 42mm; background: white; border-radius: 2mm;
+      padding: 2mm; display: flex; align-items: center; justify-content: center;
+    }
+    .qr-wrap .qr-cell { background: #0A0D14; }
+    .qr-wrap .qr-grid {
+      display: grid; gap: 0.3mm;
+      grid-template-columns: repeat(21, 1fr);
+    }
+    .qr-wrap .qr-grid span {
+      width: 100%; aspect-ratio: 1 / 1;
+    }
+    .qr-note { margin-top: 2mm; font-size: 2.4mm; color: #9ca3af; text-align: center; }
+
+    .cta {
+      margin-top: 4mm;
+      background: linear-gradient(135deg, #6C63FF, #4a3fff);
+      color: white;
+      border-radius: 3mm;
+      padding: 4mm;
+      text-align: center;
+    }
+    .cta .big {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 5.6mm; letter-spacing: 0.2mm; margin-top: 1mm;
+    }
+    .cta .lbl { font-size: 2.6mm; opacity: 0.85; letter-spacing: 0.4mm; text-transform: uppercase; }
+    .cta .wa {
+      display: inline-flex; align-items: center; gap: 1.5mm; margin-top: 2mm;
+      padding: 1.5mm 3mm; background: #25D366; color: white; border-radius: 2mm;
+      font-size: 3mm; font-weight: 700;
+    }
+
+    .foot {
+      margin-top: 3mm;
+      font-size: 2.6mm; color: #6B7280; text-align: center; line-height: 1.4;
+    }
+    .foot b { color: #0A0D14; }
+
+    /* ── Flyer B (variant with different hook) ───── */
+    .flyer-b {
+      background: linear-gradient(135deg, #0A0D14 0%, #141035 55%, #0A0D14 100%);
+      color: #E8EAF0;
+    }
+    .flyer-b::before {
+      background:
+        radial-gradient(ellipse at 100% 0%, rgba(108,99,255,0.35), transparent 50%),
+        radial-gradient(ellipse at 0% 100%, rgba(0,212,170,0.22), transparent 50%);
+    }
+    .flyer-b .sub { color: #a3a7b8; }
+    .flyer-b .benefits li .ic { background: rgba(108,99,255,0.25); color: #a39aff; }
+    .flyer-b .stat { border-color: #22273a; background: rgba(255,255,255,0.03); }
+    .flyer-b .stat .l { color: #a3a7b8; }
+    .flyer-b .foot { color: #a3a7b8; }
+    .flyer-b .foot b { color: #E8EAF0; }
+    .flyer-b .cta { background: linear-gradient(135deg, #00D4AA, #11a68a); color: #0A0D14; }
+
+    @media print {
+      body { background: white; }
+      .sheet { gap: 0; padding: 0; }
+      .flyer { border-radius: 0; box-shadow: none; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="no-print" style="position:fixed; top:10px; right:10px; z-index:50; display:flex; gap:8px;">
+  <button onclick="window.print()" style="padding:8px 14px; background:#6C63FF; color:white; border:0; border-radius:8px; font-weight:600; cursor:pointer;">🖨 Чоп кардан</button>
+</div>
+
+<div class="sheet">
+
+  <!-- ───────── FLYER A (light) ───────── -->
+  <article class="flyer">
+    <div>
+      <div class="brand">
+        <span class="logo-dot">K</span>
+        <span><span class="k">Kira</span> Art Design</span>
+      </div>
+      <div class="tag">Мо тиҷорати шуморо автоматӣ мекунем</div>
+
+      <h1 class="headline">
+        Тиҷоратро дар <span class="accent">коғаз</span><br>нигоҳ надоред.
+      </h1>
+      <p class="sub">
+        Барномаҳои фармоишӣ барои мактабҳо, мағозаҳо, беморхонаҳо
+        ва қаҳвахонаҳо дар Тоҷикистон — <b>дар ҳафтаҳо, на моҳҳо</b>.
+      </p>
+
+      <ul class="benefits">
+        <li><span class="ic">✓</span> Касса бо штрих-код + анбор + ҳисоботи даромад</li>
+        <li><span class="ic">✓</span> Сабти онлайн ва огоҳии худкор дар WhatsApp</li>
+        <li><span class="ic">✓</span> Иштирок, баҳо ва тасдиқи пардохт барои мактабҳо</li>
+        <li><span class="ic">✓</span> Менюи рақамӣ бо QR барои кафе ва тарабхонаҳо</li>
+      </ul>
+
+      <div class="stats">
+        <div class="stat"><div class="n">15+</div><div class="l">Муштарӣ</div></div>
+        <div class="stat"><div class="n">8+</div><div class="l">Система</div></div>
+        <div class="stat"><div class="n">200+</div><div class="l">Соат сарфа/моҳ</div></div>
+      </div>
+
+      <div class="foot" style="text-align:left; margin-top:5mm;">
+        <b>📞 +992 172 594 774</b> &nbsp;·&nbsp;
+        <b>wa.me/992172594774</b> &nbsp;·&nbsp;
+        <b>t.me/kiraartdesign</b>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="qr-box">
+        <div class="qr-caption">
+          Намоишҳои <span class="em">зиндаро</span><br>дар телефонатон бинед
+        </div>
+        <div class="qr-wrap"><div class="qr-grid" id="qrA"></div></div>
+        <div class="qr-note">Скан кунед → kiraart.tj</div>
+      </div>
+      <div class="cta">
+        <div class="lbl">Машварати ройгон</div>
+        <div class="big">Имрӯз нависед</div>
+        <div class="wa">💬 WhatsApp +992 172 594 774</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ───────── FLYER B (dark variant) ───────── -->
+  <article class="flyer flyer-b">
+    <div>
+      <div class="brand">
+        <span class="logo-dot">K</span>
+        <span><span class="k">Kira</span> Art Design</span>
+      </div>
+      <div class="tag">Технология барои тиҷорати шумо</div>
+
+      <h1 class="headline">
+        Ҳисоби пулро бо даст<br>
+        <span class="accent">бас кунед.</span>
+      </h1>
+      <p class="sub">
+        Мо барои мағозаи шумо — касса, анбор ва ҳисоботи даромадро
+        дар як система тайёр мекунем. Фармоиш → истифода → фоида.
+      </p>
+
+      <ul class="benefits">
+        <li><span class="ic">⚡</span> Касса дар 1 ҳафта — омӯзонем, насб мекунем</li>
+        <li><span class="ic">⚡</span> Нархи шаффоф — як дафъа мепардозед</li>
+        <li><span class="ic">⚡</span> Ҳисобот дар телефон — ҳар рӯз мебинед</li>
+        <li><span class="ic">⚡</span> Дастгирии шабакавӣ — ҳамеша дар тамос</li>
+      </ul>
+
+      <div class="stats">
+        <div class="stat"><div class="n">1</div><div class="l">Ҳафта насб</div></div>
+        <div class="stat"><div class="n">3</div><div class="l">Забон</div></div>
+        <div class="stat"><div class="n">24/7</div><div class="l">Дастгирӣ</div></div>
+      </div>
+
+      <div class="foot" style="text-align:left; margin-top:5mm;">
+        <b>📞 +992 172 594 774</b> &nbsp;·&nbsp;
+        <b>wa.me/992172594774</b> &nbsp;·&nbsp;
+        <b>t.me/kiraartdesign</b>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="qr-box">
+        <div class="qr-caption">
+          <span class="em">Намоиши зинда</span><br>дар мобилаи шумо
+        </div>
+        <div class="qr-wrap"><div class="qr-grid" id="qrB"></div></div>
+        <div class="qr-note">Скан кунед → kiraart.tj</div>
+      </div>
+      <div class="cta">
+        <div class="lbl">Нархи муайян · Муҳлати аниқ</div>
+        <div class="big">Намоиш гиред</div>
+        <div class="wa" style="background:#25D366; color:white;">💬 WhatsApp +992 172 594 774</div>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+<script>
+  // Simple deterministic QR-looking pattern so the flyer is "visually" complete.
+  // IMPORTANT: before printing for real, replace with a real QR code from qr.io
+  // encoding your live URL (e.g. https://kiraart.tj  or your GitHub Pages URL).
+  function paintQR(id, seed) {
+    const grid = document.getElementById(id);
+    const n = 21;
+    let s = seed;
+    const rand = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
+        const inFinder =
+          (r < 7 && c < 7) || (r < 7 && c > n - 8) || (r > n - 8 && c < 7);
+        const finderOn =
+          inFinder &&
+          (r === 0 || r === 6 || c === 0 || c === 6 || r === n - 1 || r === n - 7 ||
+           (r >= 2 && r <= 4 && c >= 2 && c <= 4) ||
+           (r >= 2 && r <= 4 && c >= n - 5 && c <= n - 3) ||
+           (r >= n - 5 && r <= n - 3 && c >= 2 && c <= 4));
+        const on = inFinder ? finderOn : rand() < 0.46;
+        const cell = document.createElement('span');
+        cell.style.background = on ? '#0A0D14' : 'transparent';
+        grid.appendChild(cell);
+      }
+    }
+  }
+  paintQR('qrA', 1337);
+  paintQR('qrB', 4242);
+</script>
+</body>
+</html>

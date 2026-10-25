@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --kira-bg: #0A0D14;
+  --kira-surface: #131720;
+  --kira-border: #1E2535;
+  --kira-accent: #6C63FF;
+  --kira-accent2: #00D4AA;
+  --kira-warn: #FF6B35;
+  --kira-text: #E8EAF0;
+  --kira-muted: #6B7280;
+  --kira-gold: #FFD700;
+
+  color-scheme: dark;
+}
+
+html, body, #root {
+  min-height: 100%;
+  background: var(--kira-bg);
+  color: var(--kira-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body { margin: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+* { box-sizing: border-box; }
+
+@layer components {
+  .glass-card {
+    background-color: rgba(19, 23, 32, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--kira-border);
+    border-radius: 1rem;
+  }
+  .accent-glow {
+    box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+  }
+  .teal-glow {
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
+  }
+  .gradient-text {
+    background: linear-gradient(90deg, #6C63FF 0%, #00D4AA 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .animated-bg {
+    background: linear-gradient(130deg, #0A0D14, #141035, #0A0D14, #0F1A2E);
+    background-size: 300% 300%;
+    animation: gradientShift 18s ease infinite;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--kira-bg); }
+::-webkit-scrollbar-thumb { background: var(--kira-border); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--kira-accent); }
