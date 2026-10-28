@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { ArrowRight, MessageCircle, Phone, Send } from 'lucide-react';
+import { ArrowRight, GraduationCap, MessageCircle, Phone, Send } from 'lucide-react';
 import StatCard from '../components/ui/StatCard';
 import Button from '../components/ui/Button';
 
@@ -30,6 +30,20 @@ export default function Home() {
     { icon: '📋', title: t('problem.p1_title'), sol: t('problem.p1_sol') },
     { icon: '💰', title: t('problem.p2_title'), sol: t('problem.p2_sol') },
     { icon: '📅', title: t('problem.p3_title'), sol: t('problem.p3_sol') },
+  ];
+  const steps = [
+    { icon: '💡', title: t('services.step1_title'), desc: t('services.step1_desc') },
+    { icon: '🎨', title: t('services.step2_title'), desc: t('services.step2_desc') },
+    { icon: '⌨️', title: t('services.step3_title'), desc: t('services.step3_desc') },
+    { icon: '🌐', title: t('services.step4_title'), desc: t('services.step4_desc') },
+    { icon: '☁️', title: t('services.step5_title'), desc: t('services.step5_desc') },
+    { icon: '✅', title: t('services.step6_title'), desc: t('services.step6_desc') },
+  ];
+  const courseFeatures = [
+    t('course.feature1'),
+    t('course.feature2'),
+    t('course.feature3'),
+    t('course.feature4'),
   ];
   const industries = [
     {
@@ -162,6 +176,90 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="font-display text-2xl font-bold sm:text-3xl">{t('services.title')}</h2>
+            <p className="mt-2 max-w-2xl text-sm text-kira-muted sm:text-base">
+              {t('services.subtitle')}
+            </p>
+          </div>
+          <span className="rounded-full border border-kira-accent2/40 bg-kira-accent2/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-kira-accent2">
+            {t('services.badge')}
+          </span>
+        </div>
+        <div className="mt-8 flex gap-3 overflow-x-auto pb-2 md:grid md:grid-cols-6 md:gap-4 md:overflow-visible md:pb-0">
+          {steps.map((s, i) => (
+            <motion.div
+              key={s.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="glass-card relative min-w-[150px] p-4 text-center transition-transform hover:-translate-y-1 md:min-w-0"
+            >
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-kira-accent2 px-2 py-0.5 text-[10px] font-bold text-white">
+                {i + 1}
+              </div>
+              <div className="text-3xl">{s.icon}</div>
+              <div className="mt-2 font-display text-sm font-semibold">{s.title}</div>
+              <div className="mt-1 text-xs text-kira-muted">{s.desc}</div>
+              {i < steps.length - 1 && (
+                <ArrowRight
+                  size={16}
+                  className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-kira-accent2 md:block"
+                />
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6 }}
+          className="glass-card relative overflow-hidden p-6 sm:p-10"
+        >
+          <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-kira-accent2/20 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-kira-accent/20 blur-3xl" />
+          <div className="relative grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-kira-accent2/15 text-kira-accent2">
+                  <GraduationCap size={24} />
+                </div>
+                <h2 className="font-display text-2xl font-bold sm:text-3xl">{t('course.title')}</h2>
+              </div>
+              <p className="mt-3 max-w-xl text-sm text-kira-muted sm:text-base">
+                {t('course.subtitle')}
+              </p>
+              <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+                {courseFeatures.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-sm text-kira-muted">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-kira-accent2" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <Button
+              as="a"
+              href={`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t('course.whatsapp_msg'))}`}
+              target="_blank"
+              rel="noreferrer"
+              size="lg"
+              className="w-full md:w-auto"
+            >
+              <GraduationCap size={18} />
+              {t('course.cta')}
+            </Button>
+          </div>
+        </motion.div>
       </section>
 
       <section

@@ -136,6 +136,33 @@
     "ready": "Ready",
     "mark_ready": "Mark Ready"
   },
+  "services": {
+    "title": "From Idea to Live Website",
+    "subtitle": "Full-service — we handle every step so you don't have to.",
+    "badge": "Turnkey",
+    "step1_title": "Idea",
+    "step1_desc": "Free discovery call",
+    "step2_title": "Design",
+    "step2_desc": "Mockups & UX",
+    "step3_title": "Development",
+    "step3_desc": "Clean, fast code",
+    "step4_title": "Domain",
+    "step4_desc": "Yourname.tj",
+    "step5_title": "Hosting",
+    "step5_desc": "Fast & secure",
+    "step6_title": "LIVE",
+    "step6_desc": "You go online"
+  },
+  "course": {
+    "title": "Learn to Build Websites",
+    "subtitle": "Students welcome — go from zero to real projects with our course.",
+    "feature1": "From zero — no prior experience needed",
+    "feature2": "Real projects, not just theory",
+    "feature3": "1-on-1 mentorship in Russian, Tajik or English",
+    "feature4": "Build a portfolio you can show employers",
+    "cta": "Ask about the course",
+    "whatsapp_msg": "Hi! I'd like to know more about the Kira Art Design course."
+  },
   "cta": {
     "whatsapp": "WhatsApp",
     "telegram": "Telegram",
